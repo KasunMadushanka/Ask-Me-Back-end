@@ -2,10 +2,10 @@ var sql = require('mssql');
 
 var config = {
 
-    user: 'kasun@trainmate',
-    password: 'Trainmate123',
-    server: 'trainmate.database.windows.net',
-    database: 'trainmate',
+    user: 'kasun@ask-me',
+    password: 'Askme123',
+    server: 'ask-me.database.windows.net',
+    database: 'ask_me',
     options: {
         encrypt: true
     }

@@ -34,10 +34,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.get('/', function (req, res) {
-    res.send('database connection')
-})
-
 app.post('/login', urlencodedParser, function(req, res) {
 
     var email= req.body.email;
@@ -45,7 +41,7 @@ app.post('/login', urlencodedParser, function(req, res) {
 
     sql.connect(connection).then(function() {
         console.log('opening connection');
-        new sql.Request().query("Select con_id,first_name,last_name,email from contributor where first_name='"+email+"' and password='"+password+"'").then(function(recordset) {
+        new sql.Request().query("Select customer_id,first_name,last_name,email from customer where email='"+email+"' and password='"+password+"'").then(function(recordset) {
 
             if(recordset.length>0){
                 res.send(recordset);
@@ -61,31 +57,7 @@ app.post('/login', urlencodedParser, function(req, res) {
 
 })
 
-app.post('/server.js', urlencodedParser, function(req, res) {
-
-    //var name= req.body.name;
-    //var email= req.body.email;
-    //var password= req.body.password;
-
-    sql.connect(connection).then(function() {
-        console.log('opening connection');
-
-        new sql.Request().query("Select * from customers where name='chishan'").then(function(recordset) {
-            if(recordset.length>0){
-                res.send(recordset);
-
-            }else{
-
-            }
-        }).catch(function(error) {
-
-        });
-    });
-
-})
-
-
-app.post('/register', urlencodedParser, function(req, res) {
+app.post('/signup', urlencodedParser, function(req, res) {
 
     var first_name=req.body.first_name;
     var last_name=req.body.last_name;
@@ -94,7 +66,7 @@ app.post('/register', urlencodedParser, function(req, res) {
 
     sql.connect(connection).then(function() {
         console.log('opening connection');
-        new sql.Request().query("Insert into contributor (first_name,last_name,email,password) values('"+first_name+"','"+last_name+"','"+email+"','"+password+"')").then(function(recordset) {
+        new sql.Request().query("Insert into customer (first_name,last_name,email,password) values('"+first_name+"','"+last_name+"','"+email+"','"+password+"')").then(function(recordset) {
 
             res.send("success");
 
@@ -109,5 +81,5 @@ app.post('/register', urlencodedParser, function(req, res) {
 
 
 app.listen(process.env.PORT||80, function() {
-    console.log('Example app listening on port 3000!')
+    console.log('Example app listening on port 80!')
 })
