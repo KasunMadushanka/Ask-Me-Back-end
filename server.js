@@ -98,6 +98,35 @@ app.post('/signup', urlencodedParser, function(req, res) {
 
 
 
+app.post('/addPost', urlencodedParser, function(req, res) {
+
+    var image="";
+    var category=req.body.category;
+    var description= req.body.description;
+    var added_by= req.body.user;
+
+    sql.connect(connection).then(function() {
+        console.log('opening connection');
+        new sql.Request().query("Insert into post (image,category,description,added_by) values('"+image+"','"+category+"','"+description+"','"+added_by+"')").then(function(recordset) {
+
+          new sql.Request().query("SELECT *  from post").then(function(recordset) {
+
+              res.send(recordset);
+
+          }).catch(function(error) {
+
+          });
+
+        }).catch(function(error) {
+
+        });
+    });
+
+
+});
+
+
+
 app.listen(process.env.PORT||8081, function() {
     console.log('Example app listening on port 8081!')
 })
