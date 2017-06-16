@@ -39,7 +39,7 @@ app.post('/checkAuth',urlencodedParser,function(req,res){
   sql.connect(connection).then(function(){
     new.sql.Request().query("SELECT * FROM customer WHERE customer_id='"+token+"'").then(function(recordset){
       if(recordset.length>0){
-        res.send(recordset);
+        res.send({ content: 'Success'});
       }else{
         res.send(['invalid']);
       }
