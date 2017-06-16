@@ -41,7 +41,7 @@ app.post('/checkAuth',urlencodedParser,function(req,res){
       new sql.Request().query("Select customer_id,first_name,last_name,email from customer where customer_id='"+token+"'").then(function(recordset) {
 
           if(recordset.length>0){
-              res.send(recordset);
+              res.send({ content: 'Success'});
           }
       }).catch(function(error) {
 
