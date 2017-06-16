@@ -126,6 +126,28 @@ app.post('/addPost', urlencodedParser, function(req, res) {
 });
 
 
+//retrieve post for given category
+app.post('/catposts', urlencodedParser, function(req, res) {
+      var cat= req.body.cat;
+      sql.connect(connection).then(function() {
+          console.log('opening connection');
+          new sql.Request().query("Select * from post  where category='"+cat+"'").then(function(recordset) {
+
+              if(recordset.length>0){
+                  res.send(recordset);
+
+              }else{
+                  res.send(['invalid']);
+
+              }
+          }).catch(function(error) {
+
+          });
+      });
+
+  });
+
+
 
 app.listen(process.env.PORT||8081, function() {
     console.log('Example app listening on port 8081!')
