@@ -35,15 +35,14 @@ app.use(function (req, res, next) {
 });
 
 app.post('/checkAuth',urlencodedParser,function(req,res){
-  var token=req.body.tok;
+  var token=req.body.token;
   sql.connect(connection).then(function() {
       console.log('opening connection');
       new sql.Request().query("Select customer_id,first_name,last_name,email from customer where customer_id='"+token+"'").then(function(recordset) {
 
-          if(recordset.length>0){
-              res.send({ content: 'Success'});
-          }
-      }).catch(function(error) {
+              if(recordset.length>0){
+                res.send({ content: 'Success'});
+              }
 
       });
   });
