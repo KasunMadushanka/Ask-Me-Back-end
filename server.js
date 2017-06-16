@@ -43,6 +43,9 @@ app.post('/checkAuth',urlencodedParser,function(req,res){
               if(recordset.length>0){
                 res.send({ content: 'Success'});
               }
+              else{
+                res.send({content:'Error'});
+              }
 
       });
   });
