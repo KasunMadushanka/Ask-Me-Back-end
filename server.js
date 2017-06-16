@@ -36,20 +36,23 @@ app.use(function (req, res, next) {
 
 app.post('/checkAuth',urlencodedParser,function(req,res){
   var token=req.body.tok;
-  sql.connect(connection).then(function(){
-    new.sql.Request().query("SELECT * FROM customer WHERE customer_id='"+token+"'").then(function(recordset){
-      if(recordset.length>0){
-        res.send({ content: 'Success'});
-      }else{
-        res.send(['invalid']);
-      }
-    }).catch(function(error){
+  sql.connect(connection).then(function() {
+      console.log('opening connection');
+      new sql.Request().query("Select customer_id,first_name,last_name,email from customer where customer_id='"+token+"'").then(function(recordset) {
 
-    });
+          if(recordset.length>0){
+              res.send(recordset);
 
+          }else{
+              res.send(['invalid']);
+
+          }
+      }).catch(function(error) {
+
+      });
   });
 
-});
+})
 
 app.post('/login', urlencodedParser, function(req, res) {
 
@@ -93,10 +96,10 @@ app.post('/signup', urlencodedParser, function(req, res) {
     });
 
 
-})
+});
 
 
 
-app.listen(process.env.PORT||80, function() {
-    console.log('Example app listening on port 80!')
+app.listen(process.env.PORT||8081, function() {
+    console.log('Example app listening on port 8081!')
 })
