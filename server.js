@@ -126,6 +126,36 @@ app.post('/addPost', urlencodedParser, function(req, res) {
 });
 
 
+//add comment
+
+app.post('/addComment', urlencodedParser, function(req, res) {
+
+    var comment=req.body.comment;
+    var postid=req.body.postid;
+    var added_by= req.body.user;
+
+    sql.connect(connection).then(function() {
+        console.log('opening connection');
+        new sql.Request().query("Insert into comment (description,postid,added_by) values('"+comment+"','"+postid+"','"+added_by+"')").then(function(recordset) {
+
+          new sql.Request().query("SELECT *  from comment").then(function(recordset) {
+
+              res.send(recordset);
+
+          }).catch(function(error) {
+
+          });
+
+        }).catch(function(error) {
+
+        });
+    });
+
+
+});
+
+
+
 //retrieve post for given category
 app.post('/catposts', urlencodedParser, function(req, res) {
       var cat= req.body.cat;
@@ -146,6 +176,29 @@ app.post('/catposts', urlencodedParser, function(req, res) {
       });
 
   });
+
+
+  //comments load
+
+  app.post('/composts', urlencodedParser, function(req, res) {
+        var pid= req.body.postid;
+        sql.connect(connection).then(function() {
+            console.log('opening connection');
+            new sql.Request().query("Select * from comment  where postid='"+pid+"'").then(function(recordset) {
+
+                if(recordset.length>0){
+                    res.send(recordset);
+
+                }else{
+                    res.send(['invalid']);
+
+                }
+            }).catch(function(error) {
+
+            });
+        });
+
+    });
 
 
 
