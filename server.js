@@ -34,6 +34,23 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.post('/checkAuth',urlencodedParser,function(req,res){
+  var token=req.body.tok;
+  sql.connect(connection).then(function(){
+    new.sql.Request().query("SELECT * FROM customer WHERE customer_id='"+token+"'").then(function(recordset){
+      if(recordset.length>0){
+        res.send(recordset);
+      }else{
+        res.send(['invalid']);
+      }
+    }).catch(function(error){
+
+    });
+
+  });
+
+});
+
 app.post('/login', urlencodedParser, function(req, res) {
 
     var email= req.body.email;
@@ -55,7 +72,7 @@ app.post('/login', urlencodedParser, function(req, res) {
         });
     });
 
-})
+});
 
 app.post('/signup', urlencodedParser, function(req, res) {
 
