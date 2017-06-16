@@ -42,10 +42,6 @@ app.post('/checkAuth',urlencodedParser,function(req,res){
 
           if(recordset.length>0){
               res.send(recordset);
-
-          }else{
-              res.send(['invalid']);
-
           }
       }).catch(function(error) {
 
