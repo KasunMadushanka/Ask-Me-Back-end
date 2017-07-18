@@ -100,7 +100,7 @@ app.post('/signup', urlencodedParser, function(req, res) {
 
 app.post('/addPost', urlencodedParser, function(req, res) {
 
-    var image="";
+    var image=req.body.img;
     var category=req.body.category;
     var description= req.body.description;
     var added_by= req.body.user;
@@ -138,7 +138,7 @@ app.post('/addComment', urlencodedParser, function(req, res) {
         console.log('opening connection');
         new sql.Request().query("Insert into comment (description,postid,added_by) values('"+comment+"','"+postid+"','"+added_by+"')").then(function(recordset) {
 
-          new sql.Request().query("SELECT *  from comment").then(function(recordset) {
+          new sql.Request().query("SELECT *  from comment where postid='"+postid+"'").then(function(recordset) {
 
               res.send(recordset);
 
