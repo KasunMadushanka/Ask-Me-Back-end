@@ -200,7 +200,19 @@ app.post('/catposts', urlencodedParser, function(req, res) {
 
     });
 
+    app.post('/updateComment', urlencodedParser, function(req, res) {
+          var comid= req.body.comid;
+          var rating= req.body.rating;
+          sql.connect(connection).then(function() {
+              console.log('opening connection');
+              new sql.Request().query("Update comment set rating='"+rating+"' where comid='"+comid+"'").then(function(recordset) {
 
+              }).catch(function(error) {
+
+              });
+          });
+
+      });
 
 app.listen(process.env.PORT||8081, function() {
     console.log('Example app listening on port 8081!')
