@@ -177,6 +177,27 @@ app.post('/catposts', urlencodedParser, function(req, res) {
 
   });
 
+  app.post('/users', urlencodedParser, function(req, res) {
+
+        sql.connect(connection).then(function() {
+            console.log('opening connection');
+            new sql.Request().query("Select * from customer").then(function(recordset) {
+
+                if(recordset.length>0){
+                    res.send(recordset);
+
+                }else{
+                    res.send(['invalid']);
+
+                }
+            }).catch(function(error) {
+
+            });
+        });
+
+    });
+
+
 
   //comments load
 
